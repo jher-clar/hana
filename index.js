@@ -7,12 +7,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const candles = document.querySelectorAll('.velas');
     const celebrationContainer = document.querySelector('.celebration-container');
     const counter = document.querySelector('.counter');
+    const cakeContainer = document.querySelector('.cake-container');
+    const cake = document.querySelector('#cake');
     let candlesBlownOut = 0;
     let celebrationTriggered = false;
     
     // Strawberry theme colors for confetti
     const strawberryColors = ['#ff8fa3', '#ffb6c1', '#ffd1dc', '#ffe0e6', '#ffc0cb'];
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    
+    // Responsive scaling system
+    let currentScale = 1;
+    let resizeTimeout;
+    
+    // Initialize responsive behavior
+    initResponsiveFeatures();
     
     // Auto-trigger celebration after decorations appear (around 8s)
     setTimeout(() => {
@@ -311,7 +320,222 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Responsive scaling function
+    function initResponsiveFeatures() {
+        updateScale();
+        
+        // Handle window resize with debouncing
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                updateScale();
+                adjustCandlePositions();
+            }, 150);
+        });
+        
+        // Handle orientation change
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                updateScale();
+                adjustCandlePositions();
+            }, 300);
+        });
+        
+        // Initial candle position adjustment
+        adjustCandlePositions();
+    }
+    
+    function updateScale() {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const isLandscape = viewportWidth > viewportHeight;
+        
+        // Calculate optimal scale based on viewport
+        let optimalScale;
+        
+        if (viewportWidth <= 480) {
+            optimalScale = isLandscape ? 0.75 : 0.95;
+        } else if (viewportWidth <= 768) {
+            optimalScale = isLandscape ? 0.85 : 1.0;
+        } else if (viewportWidth <= 1024) {
+            optimalScale = 1.05;
+        } else {
+            optimalScale = 1.1;
+        }
+        
+        // Apply scale with smooth transition
+        if (Math.abs(currentScale - optimalScale) > 0.05) {
+            currentScale = optimalScale;
+            if (cakeContainer) {
+                cakeContainer.style.transition = 'transform 0.3s ease';
+                cakeContainer.style.transform = `scale(${currentScale})`;
+                
+                // Ensure candles maintain proper positioning after scaling
+                setTimeout(() => {
+                    adjustCandlePositions();
+                }, 300);
+            }
+        }
+    }
+    
+    function adjustCandlePositions() {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const isLandscape = viewportWidth > viewportHeight;
+        const candle1 = document.querySelector('.candle-1.velas');
+        const candle9 = document.querySelector('.candle-9.velas');
+        
+        if (candle1 && candle9) {
+            let topOffset, leftOffset1, rightOffset9;
+            
+            if (viewportWidth <= 480) {
+                topOffset = isLandscape ? '5%' : '6%';
+                leftOffset1 = isLandscape ? '37%' : '32%';
+                rightOffset9 = isLandscape ? '37%' : '32%';
+            } else if (viewportWidth <= 768) {
+                topOffset = '7%';
+                leftOffset1 = '34%';
+                rightOffset9 = '34%';
+            } else if (viewportWidth <= 1024) {
+                topOffset = '8%';
+                leftOffset1 = '35%';
+                rightOffset9 = '35%';
+            } else {
+                topOffset = '8%';
+                leftOffset1 = '35%';
+                rightOffset9 = '35%';
+            }
+            
+            // Apply positioning with smooth transition
+            candle1.style.top = topOffset;
+            candle1.style.left = leftOffset1;
+            candle9.style.top = topOffset;
+            candle9.style.right = rightOffset9;
+            
+            // Ensure candles maintain their drop-in animation state
+            if (!candle1.style.transform.includes('translateY(-500px)')) {
+                candle1.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+            }
+            if (!candle9.style.transform.includes('translateY(-500px)')) {
+                candle9.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+            }
+        }
+    }
+    
+    // Enhanced confetti with responsive particle count and positioning
+    function getResponsiveParticleCount() {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const isLandscape = viewportWidth > viewportHeight;
+        
+        if (viewportWidth <= 480) {
+            return isLandscape ? 
+                { main: 60, secondary: 40, third: 25 } : 
+                { main: 80, secondary: 60, third: 40 };
+        }
+        if (viewportWidth <= 768) {
+            return isLandscape ? 
+                { main: 100, secondary: 70, third: 50 } : 
+                { main: 120, secondary: 80, third: 60 };
+        }
+        return { main: 150, secondary: 100, third: 80 };
+    }
+    
+    // Get optimal confetti origin based on candle positions
+    function getConfettiOrigin() {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const isLandscape = viewportWidth > viewportHeight;
+        
+        // Adjust origin based on cake and candle positioning
+        if (isLandscape && viewportHeight <= 600) {
+            return { x: 0.5, y: 0.4 }; // Higher up for landscape
+        } else if (viewportWidth <= 480) {
+            return { x: 0.5, y: 0.5 }; // Centered for mobile
+        }
+        return { x: 0.5, y: 0.6 }; // Default position
+    }
+    
+    // Update confetti function to use responsive particle count and positioning
+    const originalCreateStrawberryConfetti = createStrawberryConfetti;
+    createStrawberryConfetti = function() {
+        const particleCounts = getResponsiveParticleCount();
+        const origin = getConfettiOrigin();
+        
+        // Main confetti burst
+        if (window.confetti) {
+            confetti({
+                particleCount: particleCounts.main,
+                spread: 100,
+                origin: origin,
+                colors: strawberryColors,
+                disableForReducedMotion: true,
+                shapes: ['circle', 'square'],
+                scalar: currentScale * 1.2,
+                gravity: 0.8,
+                drift: 0.1
+            });
+            
+            // Secondary burst after 300ms
+            setTimeout(() => {
+                confetti({
+                    particleCount: particleCounts.secondary,
+                    spread: 80,
+                    origin: { x: origin.x, y: origin.y + 0.1 },
+                    colors: strawberryColors,
+                    disableForReducedMotion: true,
+                    scalar: currentScale * 0.8
+                });
+            }, 300);
+            
+            // Third burst for extra celebration
+            setTimeout(() => {
+                confetti({
+                    particleCount: particleCounts.third,
+                    spread: 120,
+                    origin: { x: origin.x, y: origin.y - 0.1 },
+                    colors: strawberryColors,
+                    disableForReducedMotion: true,
+                    shapes: ['circle'],
+                    scalar: currentScale * 1.5
+                });
+            }, 600);
+        }
+        
+        // Fallback confetti if library doesn't load
+        createFallbackConfetti();
+    };
+    
+    // Touch-friendly interactions for mobile
+    if ('ontouchstart' in window) {
+        candles.forEach(candle => {
+            candle.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                this.click();
+            });
+        });
+    }
+    
+    // Performance optimization: Intersection Observer for animations
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-viewport');
+                } else {
+                    entry.target.classList.remove('in-viewport');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        if (cake) observer.observe(cake);
+        if (celebrationContainer) observer.observe(celebrationContainer);
+    }
+    
     // Welcome message
     console.log('🎉 Happy 19th Birthday! 🎂');
     console.log('💡 Click candles to blow them out or press SPACE/ENTER to celebrate!');
+    console.log('📱 Fully responsive design - works on any screen size!');
+    console.log('🕯️ Candles now drop from above and land perfectly on cake top!');
+    console.log('✨ Enhanced drop-in animation with realistic physics!');
 });
