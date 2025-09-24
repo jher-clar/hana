@@ -506,7 +506,7 @@ svg path[fill="#ffd1dc"] {
     max-height: 85vh;
   }
   .poem-card__content { 
-    font-size: clamp(20px, 5vw, 26px);
+    font-size: clamp(18px, 4.2vw, 22px);
     padding: 1rem 1.8rem 1rem 0.8rem;
     line-height: 1.3em;
   }
@@ -821,7 +821,7 @@ body.poem-mode .top-overlay {
     max-height: 78svh;
   }
   .poem-card__content { 
-    font-size: clamp(22px, 5.8vw, 28px);
+    font-size: clamp(19px, 4.5vw, 24px);
     padding: 1.4rem 2.2rem 1.4rem 1.1rem;
   }
   /* Medium SVG Hearts floating around card */
@@ -836,13 +836,17 @@ body.poem-mode .top-overlay {
 
 /* Larger screens: portrait emphasis */
 @media (min-width: 769px) {
-  .poem-card { width: min(60vw, 620px); height: min(88vh, 900px); }
+  .poem-card { 
+    width: min(60vw, 620px); 
+    height: clamp(520px, 75vh, 800px);
+    max-height: 85vh;
+  }
 }
 
 .poem-card__content {
   align-self: start;
   padding: 1.5rem 2.5rem 1.5rem 1.25rem;
-  font-size: clamp(22px, 5.8vw, 34px);
+  font-size: clamp(20px, 4.8vw, 28px);
   line-height: 1.4em;
   position: relative;
   z-index: 2;
@@ -963,10 +967,14 @@ body:has(#poem-color-orange:checked) .poem-heart-svg path { fill: #e8874e; }
 
 /* Tall narrow Android phones (9:22 aspect ratio and similar) */
 @media (max-width: 480px) and (orientation: portrait) and (min-aspect-ratio: 9/20) {
+  .poem-card {
+    height: clamp(420px, 68svh, 520px) !important;
+    max-height: 78svh !important;
+  }
   .poem-card__content { 
-    font-size: clamp(22px, 6.5vw, 30px) !important;
-    padding: 1.4rem 2.2rem 1.4rem 1.2rem;
-    line-height: 1.4em;
+    font-size: clamp(19px, 5.8vw, 26px) !important;
+    padding: 1.2rem 2rem 1.2rem 1rem;
+    line-height: 1.35em;
   }
 }
 
@@ -997,16 +1005,17 @@ body:has(#poem-color-orange:checked) .poem-heart-svg path { fill: #e8874e; }
 
 /* Desktop refinements for poem card sizing and hearts proximity */
 @media (min-width: 769px) {
-  /* Dynamic width/height similar to cake sizing */
+  /* Dynamic width/height for desktop */
   .poem-card {
-    width: clamp(380px, 36vw, 560px);
-    height: clamp(520px, 68vh, 760px);
-    max-height: 78vh;
+    width: clamp(420px, 38vw, 600px);
+    height: clamp(560px, 72vh, 800px);
+    max-height: 82vh;
   }
-  /* Larger, responsive poem text on desktop */
+  /* Balanced poem text for desktop */
   .poem-card__content { 
-    font-size: clamp(26px, 3vw, 38px);
+    font-size: clamp(22px, 2.2vw, 30px);
     padding: 1.8rem 2.8rem 1.8rem 1.4rem;
+    line-height: 1.45em;
   }
   /* Large SVG Hearts for desktop - floating */
   .poem-heart-svg { width: 36px; height: 36px; }
