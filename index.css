@@ -506,19 +506,18 @@ svg path[fill="#ffd1dc"] {
     max-height: 85vh;
   }
   .poem-card__content { 
-    font-size: clamp(16px, 4vw, 22px);
+    font-size: clamp(20px, 5vw, 26px);
     padding: 1rem 1.8rem 1rem 0.8rem;
     line-height: 1.3em;
   }
-  /* Hearts attached to card edges in landscape */
-  .poem-hearts { inset: -1% -2%; }
-  .poem-heart { width: 12px; height: 12px; }
-  .poem-heart.heart--top-left     { left: -1%; top: -1%; --scale: 1.8; --mx: -2px; --my: -2px; }
-  .poem-heart.heart--top-center   { left: 48%; top: -2%; --scale: 1.6; --mx: 1px; --my: -2px; }
-  .poem-heart.heart--top-right    { left: 98%; top: 1%; --scale: 1.5; --mx: 2px; --my: -2px; }
-  .poem-heart.heart--left-center  { left: -1%; top: 46%; --scale: 2.0; --mx: -2px; --my: 1px; }
-  .poem-heart.heart--bottom-center{ left: 46%; top: 98%; --scale: 1.7; --mx: 1px; --my: 2px; }
-  .poem-heart.heart--bottom-right { left: 98%; top: 84%; --scale: 1.9; --mx: 2px; --my: 1px; }
+  /* Compact SVG Hearts for landscape - floating */
+  .poem-heart-svg { width: 24px; height: 24px; }
+  .poem-heart-svg.heart--top-left     { top: -4%;  left: -6%; --float-x: -8px; --float-y: -10px; }
+  .poem-heart-svg.heart--top-center   { top: -6%;  left: 50%; --float-x: 0px; --float-y: -12px; }
+  .poem-heart-svg.heart--top-right    { top: -4%;  right: -6%; --float-x: 8px; --float-y: -10px; }
+  .poem-heart-svg.heart--left-center  { top: 50%;  left: -8%; --float-x: -10px; --float-y: 0px; }
+  .poem-heart-svg.heart--bottom-center{ bottom: -6%; left: 50%; --float-x: 0px; --float-y: 8px; }
+  .poem-heart-svg.heart--bottom-right { bottom: -4%; right: -6%; --float-x: 10px; --float-y: 6px; }
 }
 
 /* Desktop refinements: keep clean vertical stack, no overlap */
@@ -822,18 +821,17 @@ body.poem-mode .top-overlay {
     max-height: 78svh;
   }
   .poem-card__content { 
-    font-size: clamp(18px, 4.8vw, 24px);
+    font-size: clamp(22px, 5.8vw, 28px);
     padding: 1.4rem 2.2rem 1.4rem 1.1rem;
   }
-  /* Hearts close to card edges */
-  .poem-hearts { inset: -2% -3%; }
-  .poem-heart { width: 16px; height: 16px; }
-  .poem-heart.heart--top-left     { left: -1%;  top: -1%;  --scale: 2.4; --mx: -2px; --my: -2px; }
-  .poem-heart.heart--top-center   { left: 48%; top: -2%;  --scale: 2.2; --mx: 2px;  --my: -3px; }
-  .poem-heart.heart--top-right    { left: 98%; top: 1%;   --scale: 2.0; --mx: 3px;  --my: -2px; }
-  .poem-heart.heart--left-center  { left: -1%;  top: 46%; --scale: 2.6; --mx: -2px; --my: 2px; }
-  .poem-heart.heart--bottom-center{ left: 46%; top: 98%; --scale: 2.2; --mx: 2px;  --my: 3px; }
-  .poem-heart.heart--bottom-right { left: 98%; top: 84%; --scale: 2.4; --mx: 3px;  --my: 2px; }
+  /* Medium SVG Hearts floating around card */
+  .poem-heart-svg { width: 30px; height: 30px; }
+  .poem-heart-svg.heart--top-left     { top: -6%;  left: -8%; --float-x: -10px; --float-y: -12px; }
+  .poem-heart-svg.heart--top-center   { top: -8%;  left: 50%; --float-x: 0px; --float-y: -18px; }
+  .poem-heart-svg.heart--top-right    { top: -6%;  right: -8%; --float-x: 10px; --float-y: -12px; }
+  .poem-heart-svg.heart--left-center  { top: 50%;  left: -12%; --float-x: -12px; --float-y: 0px; }
+  .poem-heart-svg.heart--bottom-center{ bottom: -8%; left: 50%; --float-x: 0px; --float-y: 12px; }
+  .poem-heart-svg.heart--bottom-right { bottom: -6%; right: -8%; --float-x: 12px; --float-y: 10px; }
 }
 
 /* Larger screens: portrait emphasis */
@@ -844,7 +842,7 @@ body.poem-mode .top-overlay {
 .poem-card__content {
   align-self: start;
   padding: 1.5rem 2.5rem 1.5rem 1.25rem;
-  font-size: clamp(18px, 4.8vw, 28px);
+  font-size: clamp(22px, 5.8vw, 34px);
   line-height: 1.4em;
   position: relative;
   z-index: 2;
@@ -885,45 +883,58 @@ body.poem-mode .top-overlay {
 .poem-card__color-picker label[for="poem-color-yellow"] { --bg-color: #feffbe; }
 .poem-card__color-picker label[for="poem-color-orange"] { --bg-color: #f9d7ac; }
 
-/* Hearts decoration around the card */
-.poem-hearts { position: absolute; inset: -5% -8%; pointer-events: none; z-index: 1; }
-.poem-heart { position: absolute; width: 22px; height: 22px; background: #a00; clip-path: path('M12 20a1 1 0 0 1-.437-.1C11.214 19.73 3 15.671 3 9a5 5 0 0 1 8.535-3.536l.465.465.465-.465A5 5 0 0 1 21 9c0 6.646-8.212 10.728-8.562 10.9A1 1 0 0 1 12 20z'); transform: scale(0) translate(0,0); opacity: 0; animation: heartPopFloat 9s .3s ease-in-out infinite; }
-.poem-heart::after { content: ""; position: absolute; inset: 0; transform: translate(0,0); background: var(--bg-color); transition: background .2s cubic-bezier(1,1,.5,1.3333); }
-.poem-heart.heart--with-dots::after { background-image: radial-gradient(#efefef 20%, transparent 25%); background-position: 0 0, 2px 2px; background-size: 4px 4px; }
-.poem-heart.heart--with-lines::after { background-image: repeating-linear-gradient(35deg, rgba(255,255,255,.25), rgba(255,255,255,.25) 2px, transparent 2px, transparent 4px); background-position: center; }
-.poem-heart.heart--is-yellow::after { --bg-color: #e7b843; }
-.poem-heart.heart--is-green::after  { --bg-color: #229587; }
-.poem-heart.heart--is-red::after    { --bg-color: #d44835; }
-.poem-heart.heart--is-pink::after   { --bg-color: #ce546d; }
-.poem-heart.heart--is-blue::after   { --bg-color: #58b7ce; }
-.poem-heart.heart--is-orange::after { --bg-color: #e8874e; }
-.poem-heart.heart--top-left { left: -8%; top: -6%; rotate: -7deg; z-index: 2; --scale: 4.6; --mx: -12px; --my: -10px; animation-delay: .1s; animation-duration: 8.5s; }
-.poem-heart.heart--top-center { left: 64%; top: -8%; rotate: -42deg; z-index: 0; --scale: 4.6; --mx: 10px; --my: -14px; animation-delay: .2s; animation-duration: 9.2s; }
-.poem-heart.heart--top-right { left: 110%; top: 4%; rotate: 10deg; z-index: 0; --scale: 3.6; --mx: 12px; --my: -8px; animation-delay: .3s; animation-duration: 8.8s; }
-.poem-heart.heart--left-center { left: -12%; top: 58%; rotate: -23deg; z-index: 2; --scale: 6.2; --mx: -10px; --my: 10px; animation-delay: .2s; animation-duration: 9.5s; }
-.poem-heart.heart--bottom-center { left: 38%; top: 104%; rotate: 40deg; --scale: 4.2; --mx: 6px; --my: 12px; animation-delay: .3s; animation-duration: 8.9s; }
-.poem-heart.heart--bottom-right { left: 102%; top: 82%; rotate: 12deg; z-index: 0; --scale: 5.4; --mx: 12px; --my: 8px; animation-delay: .4s; animation-duration: 9.6s; }
+/* SVG Hearts decoration - floating around the card */
+.poem-hearts { 
+  position: absolute; 
+  inset: -15% -20%; 
+  pointer-events: none; 
+  z-index: 0; /* behind the card */
+  overflow: visible;
+}
 
-/* Dynamic accent: tint hearts via body state if needed */
-body:has(#poem-color-red:checked)   .poem-heart::after   { --bg-color: #d44835; }
-body:has(#poem-color-blue:checked)  .poem-heart::after   { --bg-color: #58b7ce; }
-body:has(#poem-color-green:checked) .poem-heart::after   { --bg-color: #229587; }
-body:has(#poem-color-yellow:checked) .poem-heart::after   { --bg-color: #e7b843; }
-body:has(#poem-color-orange:checked) .poem-heart::after   { --bg-color: #e8874e; }
+.poem-heart-svg {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  opacity: 0;
+  animation: heartPopFloat 9s .3s ease-in-out infinite;
+}
+
+/* Heart positioning around card boundaries - floating effect */
+.poem-heart-svg.heart--top-left     { top: -5%;  left: -8%;  }
+.poem-heart-svg.heart--top-center   { top: -8%;  left: 50%; transform: translateX(-50%); }
+.poem-heart-svg.heart--top-right    { top: -5%;  right: -8%; }
+.poem-heart-svg.heart--left-center  { top: 50%;  left: -12%;  transform: translateY(-50%); }
+.poem-heart-svg.heart--bottom-center{ bottom: -8%; left: 50%; transform: translateX(-50%); }
+.poem-heart-svg.heart--bottom-right { bottom: -5%; right: -8%; }
+/* Heart animation delays, rotations, and float directions */
+.poem-heart-svg.heart--top-left     { animation-delay: .1s; animation-duration: 8.5s; rotate: -7deg; --float-x: -15px; --float-y: -20px; }
+.poem-heart-svg.heart--top-center   { animation-delay: .2s; animation-duration: 9.2s; rotate: -15deg; --float-x: 0px; --float-y: -25px; }
+.poem-heart-svg.heart--top-right    { animation-delay: .3s; animation-duration: 8.8s; rotate: 10deg; --float-x: 15px; --float-y: -20px; }
+.poem-heart-svg.heart--left-center  { animation-delay: .2s; animation-duration: 9.5s; rotate: -23deg; --float-x: -20px; --float-y: 0px; }
+.poem-heart-svg.heart--bottom-center{ animation-delay: .3s; animation-duration: 8.9s; rotate: 40deg; --float-x: 0px; --float-y: 20px; }
+.poem-heart-svg.heart--bottom-right { animation-delay: .4s; animation-duration: 9.6s; rotate: 12deg; --float-x: 20px; --float-y: 15px; }
+
+/* Dynamic accent: tint SVG hearts via body state */
+body:has(#poem-color-red:checked)    .poem-heart-svg path { fill: #d44835; }
+body:has(#poem-color-blue:checked)   .poem-heart-svg path { fill: #58b7ce; }
+body:has(#poem-color-green:checked)  .poem-heart-svg path { fill: #229587; }
+body:has(#poem-color-yellow:checked) .poem-heart-svg path { fill: #e7b843; }
+body:has(#poem-color-orange:checked) .poem-heart-svg path { fill: #e8874e; }
 
 @keyframes poem-pop {
   0% { transform: scale(0); }
-  1%, 34%, 64%, 100% { transform: scale(var(--scale)) translate(0, 0); }
-  10%, 42%, 72% { transform: scale(var(--scale)) translate(-1px, -1px); }
-  18%, 50%, 80% { transform: scale(var(--scale)) translate(-1px, 2px); }
-  26%, 58%, 88% { transform: scale(var(--scale)) translate(1px, 1px); }
+  1%, 34%, 64%, 100% { transform: scale(1) translate(0, 0); }
+  10%, 42%, 72% { transform: scale(1) translate(-1px, -1px); }
+  18%, 50%, 80% { transform: scale(1) translate(-1px, 2px); }
+  26%, 58%, 88% { transform: scale(1) translate(1px, 1px); }
 }
 
 @keyframes heartPopFloat {
-  0% { transform: scale(0) translate(0,0); opacity: 0; }
-  10% { transform: scale(var(--scale)) translate(0,0); opacity: 1; }
-  60% { transform: scale(var(--scale)) translate(calc(var(--mx, 0px) * 0.6), calc(var(--my, 0px) * 0.6)); opacity: 1; }
-  100% { transform: scale(var(--scale)) translate(var(--mx, 0px), var(--my, 0px)); opacity: .85; }
+  0% { opacity: 0; transform: scale(0) translate(0, 0); }
+  10% { opacity: 1; transform: scale(1) translate(0, 0); }
+  60% { opacity: 1; transform: scale(1.1) translate(var(--float-x, 8px), var(--float-y, -12px)); }
+  100% { opacity: .75; transform: scale(1.05) translate(var(--float-x, 12px), var(--float-y, -18px)); }
 }
 
 /* Slide transitions between cake and poem */
@@ -950,6 +961,15 @@ body:has(#poem-color-orange:checked) .poem-heart::after   { --bg-color: #e8874e;
   .cake-container { min-height: 54svh; }
 }
 
+/* Tall narrow Android phones (9:22 aspect ratio and similar) */
+@media (max-width: 480px) and (orientation: portrait) and (min-aspect-ratio: 9/20) {
+  .poem-card__content { 
+    font-size: clamp(22px, 6.5vw, 30px) !important;
+    padding: 1.4rem 2.2rem 1.4rem 1.2rem;
+    line-height: 1.4em;
+  }
+}
+
 /* Mobile phone optimizations */
 @media (max-width: 480px) and (orientation: portrait) {
   /* Compact card for small phones */
@@ -959,21 +979,20 @@ body:has(#poem-color-orange:checked) .poem-heart::after   { --bg-color: #e8874e;
     max-height: 70svh;
     border-radius: 12px;
   }
-  /* Better readable text size for mobile */
+  /* Larger text for Android WebView and 9:22 aspect ratio */
   .poem-card__content { 
-    font-size: clamp(16px, 4.5vw, 20px);
+    font-size: clamp(20px, 6vw, 28px);
     padding: 1.2rem 2rem 1.2rem 1rem;
     line-height: 1.35em;
   }
-  /* Hearts very close to card edges - attached look */
-  .poem-hearts { inset: -1% -2%; }
-  .poem-heart { width: 14px; height: 14px; }
-  .poem-heart.heart--top-left     { left: -1%;  top: -1%;  --scale: 2.2; --mx: -2px; --my: -2px; }
-  .poem-heart.heart--top-center   { left: 48%; top: -2%;  --scale: 2.0; --mx: 2px;  --my: -3px; }
-  .poem-heart.heart--top-right    { left: 98%; top: 1%;   --scale: 1.8; --mx: 3px;  --my: -2px; }
-  .poem-heart.heart--left-center  { left: -1%;  top: 46%; --scale: 2.4; --mx: -2px; --my: 2px; }
-  .poem-heart.heart--bottom-center{ left: 46%; top: 98%; --scale: 2.0; --mx: 2px;  --my: 3px; }
-  .poem-heart.heart--bottom-right { left: 98%; top: 84%; --scale: 2.2; --mx: 3px;  --my: 2px; }
+  /* Larger SVG Hearts floating around card */
+  .poem-heart-svg { width: 28px; height: 28px; }
+  .poem-heart-svg.heart--top-left     { top: -8%;  left: -10%; --float-x: -12px; --float-y: -15px; }
+  .poem-heart-svg.heart--top-center   { top: -10%; left: 50%; --float-x: 0px; --float-y: -20px; }
+  .poem-heart-svg.heart--top-right    { top: -8%;  right: -10%; --float-x: 12px; --float-y: -15px; }
+  .poem-heart-svg.heart--left-center  { top: 50%;  left: -15%; --float-x: -15px; --float-y: 0px; }
+  .poem-heart-svg.heart--bottom-center{ bottom: -10%; left: 50%; --float-x: 0px; --float-y: 15px; }
+  .poem-heart-svg.heart--bottom-right { bottom: -8%; right: -10%; --float-x: 15px; --float-y: 12px; }
 }
 
 /* Desktop refinements for poem card sizing and hearts proximity */
@@ -986,15 +1005,17 @@ body:has(#poem-color-orange:checked) .poem-heart::after   { --bg-color: #e8874e;
   }
   /* Larger, responsive poem text on desktop */
   .poem-card__content { 
-    font-size: clamp(22px, 2.6vw, 32px);
+    font-size: clamp(26px, 3vw, 38px);
     padding: 1.8rem 2.8rem 1.8rem 1.4rem;
   }
-  /* Bring hearts closer to card and reduce overflow on large screens */
-  .poem-hearts { inset: -4% -6%; }
-  .poem-heart.heart--top-right { left: 102%; }
-  .poem-heart.heart--top-left { left: -6%; }
-  .poem-heart.heart--left-center { left: -6%; }
-  .poem-heart.heart--bottom-center { top: 102%; }
+  /* Large SVG Hearts for desktop - floating */
+  .poem-heart-svg { width: 36px; height: 36px; }
+  .poem-heart-svg.heart--top-left     { top: -4%; left: -6%; --float-x: -18px; --float-y: -25px; }
+  .poem-heart-svg.heart--top-center   { top: -6%; left: 50%; --float-x: 0px; --float-y: -30px; }
+  .poem-heart-svg.heart--top-right    { top: -4%; right: -6%; --float-x: 18px; --float-y: -25px; }
+  .poem-heart-svg.heart--left-center  { top: 50%; left: -8%; --float-x: -25px; --float-y: 0px; }
+  .poem-heart-svg.heart--bottom-center{ bottom: -6%; left: 50%; --float-x: 0px; --float-y: 25px; }
+  .poem-heart-svg.heart--bottom-right { bottom: -4%; right: -6%; --float-x: 25px; --float-y: 20px; }
 }
 
 /* End of stylesheet */

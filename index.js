@@ -35,12 +35,24 @@
           <label for="poem-color-orange" data-color="#f9d7ac" title="Orange">Orange</label>\
         </fieldset>\
         <div class="poem-hearts">\
-          <div class="poem-heart heart--is-yellow heart--top-left"></div>\
-          <div class="poem-heart heart--with-dots heart--is-green heart--left-center"></div>\
-          <div class="poem-heart heart--with-dots heart--is-red heart--top-center"></div>\
-          <div class="poem-heart heart--is-pink heart--bottom-center"></div>\
-          <div class="poem-heart heart--is-orange heart--bottom-right"></div>\
-          <div class="poem-heart heart--is-blue heart--with-lines heart--top-right"></div>\
+          <svg class="poem-heart-svg heart--top-left" viewBox="0 0 24 24" fill="none">\
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#e7b843"/>\
+          </svg>\
+          <svg class="poem-heart-svg heart--left-center" viewBox="0 0 24 24" fill="none">\
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#229587"/>\
+          </svg>\
+          <svg class="poem-heart-svg heart--top-center" viewBox="0 0 24 24" fill="none">\
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#d44835"/>\
+          </svg>\
+          <svg class="poem-heart-svg heart--bottom-center" viewBox="0 0 24 24" fill="none">\
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#ce546d"/>\
+          </svg>\
+          <svg class="poem-heart-svg heart--bottom-right" viewBox="0 0 24 24" fill="none">\
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#e8874e"/>\
+          </svg>\
+          <svg class="poem-heart-svg heart--top-right" viewBox="0 0 24 24" fill="none">\
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#58b7ce"/>\
+          </svg>\
         </div>\
       </div>'
     );
