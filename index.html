@@ -8,13 +8,35 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<!-- Global floating overlay mask (not part of any container) -->
+<img id="topMask" class="top-overlay" src="https://i.imgur.com/4EKyDJM.png" alt="Top overlay mask" />
 
 <main class="hero">
 <div class="hero-inner">
 <div class="greeting-card">
 <div class="cake-container">
+  <div class="velas candle-1" aria-label="Birthday candle 1">
+    <span class="wick" aria-hidden="true"></span>
+    <img class="candle-img" src="https://i.imgur.com/pL8Iajt.png" alt="Candle 1" />
+    <div class="fuego"></div>
+    <div class="fuego"></div>
+    <div class="fuego"></div>
+    <div class="fuego"></div>
+    <div class="fuego"></div>
+  </div>
+  <div class="velas candle-9" aria-label="Birthday candle 9">
+    <span class="wick" aria-hidden="true"></span>
+    <img class="candle-img" src="https://i.imgur.com/1Dsxxw1.png" alt="Candle 9" />
+    <div class="fuego"></div>
+    <div class="fuego"></div>
+    <div class="fuego"></div>
+    <div class="fuego"></div>
+    <div class="fuego"></div>
+  </div>
 <svg id="cake" version="1.1" x="0px" y="0px" width="200px" height="500px" viewBox="0 0 200 500" enable-background="new 0 0 200 500" xml:space="preserve">
     <path fill="#ffb3ba" d="M173.667-13.94c-49.298,0-102.782,0-147.334,0c-3.999,0-4-16.002,0-16.002
         c44.697,0,96.586,0,147.334,0C177.667-29.942,177.668-13.94,173.667-13.94z">
@@ -259,3 +281,112 @@
 <!-- GSAP core -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="hb-animation.js"></script>
+<script src="index.js" defer></script>
+<script>
+  // Position two candles on top of the cake responsively and keep CSS-only flames
+  (function(){
+    function placeCandles(){
+      var container = document.querySelector('.cake-container');
+      var cake = document.getElementById('cake');
+      var c1 = document.querySelector('.candle-1.velas');
+      var c2 = document.querySelector('.candle-9.velas');
+      if(!container || !cake || !c1 || !c2) return;
+      var crect = container.getBoundingClientRect();
+      var rect = cake.getBoundingClientRect();
+      var cw = c1.offsetWidth || 8;
+      var ch = c1.offsetHeight || 36;
+      // Approximate top surface of cake in the SVG (~79% down the viewBox)
+      // Calculate cake surface and embed candles slightly into icing
+      var cakeSurface = 0.82; // increase to move candles closer to cake
+      var embed = 4;          // pixels to sink into cake surface
+      var top = (rect.top - crect.top) + rect.height * cakeSurface - ch + embed;
+      // Place candles symmetrically around cake center; smaller spread = closer
+      var spread = 0.03; // 0.10 = closer, 0.18 default-ish, increase to move apart
+      var left1 = (rect.left - crect.left) + rect.width * (0.5 - spread) - cw/2;
+      var left2 = (rect.left - crect.left) + rect.width * (0.5 + spread) - cw/2;
+      c1.style.top = top + 'px';
+      c1.style.left = left1 + 'px';
+      c1.style.right = 'auto';
+      c2.style.top = top + 'px';
+      c2.style.left = left2 + 'px';
+      c2.style.right = 'auto';
+    }
+    window.addEventListener('DOMContentLoaded', function(){
+      placeCandles();
+      setTimeout(placeCandles, 100); // after fonts/layout settle
+    });
+    // Ensure we reposition after images load
+    window.addEventListener('load', function(){
+      placeCandles();
+      setTimeout(placeCandles, 150);
+    });
+    var imgs = document.querySelectorAll('.velas .candle-img');
+    imgs.forEach(function(im){ im.addEventListener('load', function(){ setTimeout(placeCandles, 50); }); });
+    window.addEventListener('resize', function(){ setTimeout(placeCandles, 100); });
+    window.addEventListener('orientationchange', function(){ setTimeout(placeCandles, 200); });
+  })();
+</script>
+
+<!-- Canvas Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+(function(){
+  function getCakeOriginPoints() {
+    var cake = document.getElementById('cake');
+    if (!cake) return null;
+    var rect = cake.getBoundingClientRect();
+    var vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    var vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    var cx = (rect.left + rect.width/2) / vw;
+    var cy = (rect.top + rect.height*0.6) / vh; // slightly above center of cake
+    var top = { x: cx, y: (rect.top + rect.height*0.2)/vh };
+    var left = { x: (rect.left + rect.width*0.2)/vw, y: (rect.top + rect.height*0.5)/vh };
+    var right = { x: (rect.left + rect.width*0.8)/vw, y: (rect.top + rect.height*0.5)/vh };
+    var ring = [
+      { x: (rect.left + rect.width*0.3)/vw, y: (rect.top + rect.height*0.35)/vh },
+      { x: (rect.left + rect.width*0.7)/vw, y: (rect.top + rect.height*0.35)/vh },
+      { x: (rect.left + rect.width*0.25)/vw, y: (rect.top + rect.height*0.65)/vh },
+      { x: (rect.left + rect.width*0.75)/vw, y: (rect.top + rect.height*0.65)/vh }
+    ];
+    return { center: {x: cx, y: cy}, top: top, left: left, right: right, ring: ring };
+  }
+
+  function firePattern(origin) {
+    if (typeof confetti !== 'function') return;
+    var count = 200;
+    var defaults = { origin: origin || { y: 0.7 } };
+    function fire(particleRatio, opts) {
+      confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(count * particleRatio) }));
+    }
+    fire(0.25, { spread: 26, startVelocity: 55 });
+    fire(0.2,  { spread: 60 });
+    fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+    fire(0.1,  { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+    fire(0.1,  { spread: 120, startVelocity: 45 });
+  }
+
+  function burstAroundCake() {
+    var pts = getCakeOriginPoints();
+    if (!pts) return;
+    // main bursts
+    firePattern(pts.top);
+    setTimeout(function(){ firePattern(pts.center); }, 120);
+    setTimeout(function(){ firePattern(pts.left); }, 240);
+    setTimeout(function(){ firePattern(pts.right); }, 360);
+    // ring of softer bursts
+    pts.ring.forEach(function(p, i){
+      setTimeout(function(){ firePattern(p); }, 500 + i*120);
+    });
+  }
+
+  function launchOnReady() {
+    setTimeout(burstAroundCake, 1200);
+  }
+
+  window.addEventListener('load', launchOnReady);
+  window.addEventListener('resize', function(){ setTimeout(burstAroundCake, 400); });
+  window.addEventListener('orientationchange', function(){ setTimeout(burstAroundCake, 600); });
+  var cake = document.getElementById('cake');
+  if (cake) cake.addEventListener('click', burstAroundCake);
+})();
+</script>

@@ -441,7 +441,7 @@ svg path[fill="#ffd1dc"] {
   margin: 0;
   margin-top: -3svh;
   height: auto;
-  min-height: 32svh;
+  min-height: 38svh;
   align-items: center;
 }
 
@@ -449,24 +449,24 @@ svg path[fill="#ffd1dc"] {
 .cake-container {
   align-items: center;
   height: auto;
-  min-height: 34svh;
+  min-height: 42svh;
 }
 
 /* Scale cake a bit larger on phones and remove upward shift */
 #cake {
   transform: none;
-  width: clamp(260px, 85vw, 520px);
-  max-height: 46svh;
+  width: clamp(320px, 92vw, 760px);
+  max-height: 58svh;
 }
 
 /* Tighter, clearer title sizing and container dimensions */
 .hb-container {
-  width: min(96vw, 680px);
-  height: clamp(220px, 38svh, 440px);
+  width: min(98vw, 760px);
+  height: clamp(260px, 44svh, 520px);
 }
 
 #hbTitle {
-  font-size: clamp(26px, 8vw, 44px) !important;
+  font-size: clamp(36px, 11vw, 72px) !important;
 }
 
 /* Allow scroll on mobile when content exceeds viewport */
@@ -476,20 +476,20 @@ svg path[fill="#ffd1dc"] {
 
 /* Small phone portrait refinements */
 @media (max-width: 480px) and (orientation: portrait) {
-  .cake-container { min-height: 42svh; }
-  .hb-section { margin-top: -5svh; }
-  #cake { width: clamp(280px, 92vw, 580px); max-height: 50svh; }
-  .hb-container { width: min(96vw, 600px); height: clamp(240px, 42svh, 460px); }
-  #hbTitle { font-size: clamp(26px, 9vw, 46px) !important; }
+  .cake-container { min-height: 48svh; }
+  .hb-section { margin-top: -6svh; }
+  #cake { width: clamp(320px, 96vw, 700px); max-height: 60svh; }
+  .hb-container { width: min(98vw, 680px); height: clamp(300px, 50svh, 600px); }
+  #hbTitle { font-size: clamp(38px, 12vw, 76px) !important; }
 }
 
 /* Larger phones/tablets portrait */
 @media (min-width: 481px) and (max-width: 768px) and (orientation: portrait) {
-  .cake-container { min-height: 40svh; }
-  .hb-section { margin-top: -4svh; }
-  #cake { width: clamp(280px, 84vw, 540px); max-height: 48svh; }
-  .hb-container { width: min(94vw, 700px); height: clamp(240px, 38svh, 440px); }
-  #hbTitle { font-size: clamp(28px, 7vw, 48px) !important; }
+  .cake-container { min-height: 46svh; }
+  .hb-section { margin-top: -6svh; }
+  #cake { width: clamp(320px, 90vw, 740px); max-height: 58svh; }
+  .hb-container { width: min(96vw, 740px); height: clamp(300px, 46svh, 560px); }
+  #hbTitle { font-size: clamp(36px, 10vw, 70px) !important; }
 }
 
 /* Mobile landscape with short height */
@@ -498,6 +498,27 @@ svg path[fill="#ffd1dc"] {
   .cake-container { min-height: 52vh; }
   .hb-section { min-height: 40vh; }
   .hb-container { height: clamp(180px, 40vh, 320px); }
+  
+  /* Compact poem card for landscape mobile */
+  .poem-card {
+    width: min(85vw, 450px);
+    height: clamp(300px, 75vh, 420px);
+    max-height: 85vh;
+  }
+  .poem-card__content { 
+    font-size: clamp(16px, 4vw, 22px);
+    padding: 1rem 1.8rem 1rem 0.8rem;
+    line-height: 1.3em;
+  }
+  /* Hearts attached to card edges in landscape */
+  .poem-hearts { inset: -1% -2%; }
+  .poem-heart { width: 12px; height: 12px; }
+  .poem-heart.heart--top-left     { left: -1%; top: -1%; --scale: 1.8; --mx: -2px; --my: -2px; }
+  .poem-heart.heart--top-center   { left: 48%; top: -2%; --scale: 1.6; --mx: 1px; --my: -2px; }
+  .poem-heart.heart--top-right    { left: 98%; top: 1%; --scale: 1.5; --mx: 2px; --my: -2px; }
+  .poem-heart.heart--left-center  { left: -1%; top: 46%; --scale: 2.0; --mx: -2px; --my: 1px; }
+  .poem-heart.heart--bottom-center{ left: 46%; top: 98%; --scale: 1.7; --mx: 1px; --my: 2px; }
+  .poem-heart.heart--bottom-right { left: 98%; top: 84%; --scale: 1.9; --mx: 2px; --my: 1px; }
 }
 
 /* Desktop refinements: keep clean vertical stack, no overlap */
@@ -505,6 +526,475 @@ svg path[fill="#ffd1dc"] {
   .hb-section { margin: 0; min-height: 36vh; }
   .cake-container { min-height: 50vh; }
   #cake { width: clamp(320px, 36vw, 620px); max-height: 48vh; }
+}
+
+/* Candle + flame styling (reintroduced) */
+.velas {
+  position: absolute;
+  width: 6px;
+  height: 38px;
+  border-radius: 10px;
+  background: transparent; /* container only when using custom images */
+  z-index: 5; /* behind the cake */
+  backface-visibility: hidden;
+  transform: translateY(-300px);
+  animation: candleDrop 500ms 6s ease-out forwards;
+}
+
+/* tint stripes */
+.velas::before,
+.velas::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255,0,0,0.35);
+}
+/* disable stripes for image-based candles */
+.candle-1.velas::before, .candle-1.velas::after,
+.candle-9.velas::before, .candle-9.velas::after { display: none; }
+.velas::before { top: 45%; }
+.velas::after  { top: 25%; }
+
+/* flames */
+.fuego {
+  position: absolute;
+  top: -14px; /* lower flame so it attaches to the wick */
+  left: 50%;
+  width: 8px;
+  height: 16px;
+  margin-left: -4px;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 8px rgba(255, 247, 200, 0.25));
+}
+.fuego:nth-child(1) { animation: fuego 2s 6.5s infinite; }
+.fuego:nth-child(2) { animation: fuego 1.5s 6.5s infinite; }
+.fuego:nth-child(3) { animation: fuego 1s 6.5s infinite; }
+.fuego:nth-child(4) { animation: fuego 0.5s 6.5s infinite; }
+.fuego:nth-child(5) { animation: fuego 0.2s 6.5s infinite; }
+
+@keyframes candleDrop { to { transform: translateY(0); } }
+
+@keyframes fuego {
+  0%, 100% {
+    background: rgba(254, 248, 97, 0.55);
+    box-shadow: 0 0 40px 10px rgba(248, 233, 209, 0.25);
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    background: rgba(255, 50, 0, 0.2);
+    box-shadow: 0 0 40px 20px rgba(248, 233, 209, 0.25);
+    transform: translateY(-20px) scale(0);
+  }
+}
+
+/* responsive candle sizing so they look proportional on phones */
+@media (max-width: 480px) {
+  .velas { width: 5px; height: 34px; }
+  .fuego { width: 6px; height: 14px; margin-left: -3px; top: -12px; }
+  .velas .wick { top: -3px; height: 7px; }
+}
+
+/* Custom candle images and wicks */
+.candle-img {
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  height: 100%;
+  width: auto;
+  /* tint to match cake theme: soft pink hue shift */
+  filter: hue-rotate(340deg) saturate(1.05) brightness(1.06)
+          drop-shadow(0 1px 0 rgba(255,255,255,0.35))
+          drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+  pointer-events: none;
+}
+
+/* small wick just behind the candle image */
+.velas .wick {
+  position: absolute;
+  left: 50%;
+  top: -4px; /* lower wick so it touches candle top */
+  width: 2px;
+  height: 8px;
+  margin-left: -1px;
+  background: linear-gradient(#6b4e4a, #3a2a28);
+  border-radius: 2px;
+  z-index: -1; /* behind the candle to look embedded */
+  opacity: 0.95;
+}
+
+/* Slightly different tint per candle to avoid flatness */
+.candle-1 .candle-img { filter: hue-rotate(350deg) saturate(1.1) brightness(1.05) drop-shadow(0 1px 0 rgba(255,255,255,0.35)) drop-shadow(0 2px 6px rgba(0,0,0,0.15)); }
+.candle-9 .candle-img { filter: hue-rotate(330deg) saturate(1.1) brightness(1.05) drop-shadow(0 1px 0 rgba(255,255,255,0.35)) drop-shadow(0 2px 6px rgba(0,0,0,0.15)); }
+
+/* Top overlay mask */
+.top-overlay {
+  position: fixed;
+  top: env(safe-area-inset-top, 0px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto; /* preserve aspect ratio */
+  height: clamp(90px, 18svh, 240px); /* always visible and stable during scroll */
+  z-index: 9999;
+  pointer-events: none;
+  filter: hue-rotate(335deg) saturate(1.08) brightness(1.04) contrast(0.98) drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+  opacity: 0.95;
+}
+
+@media (max-width: 768px) {
+  .top-overlay { height: clamp(100px, 22svh, 260px); }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .top-overlay { height: clamp(70px, 16svh, 200px); }
+}
+
+/* Overlay animation enhancements */
+.top-overlay {
+  will-change: transform, filter, opacity;
+  animation: overlayMotion 10s ease-in-out infinite,
+             overlayGlow 6.5s ease-in-out infinite,
+             overlayFlicker 12s ease-in-out infinite;
+}
+
+/* Overlay animation keyframes */
+@keyframes overlayMotion {
+  0%   { transform: translateX(-50%) translateY(0)    scale(1)      rotate(0deg); }
+  20%  { transform: translateX(-50%) translateY(6px)  scale(1.008)  rotate(0.4deg); }
+  40%  { transform: translateX(-50%) translateY(2px)  scale(1.012)  rotate(-0.3deg); }
+  60%  { transform: translateX(-50%) translateY(8px)  scale(1.006)  rotate(0.2deg); }
+  80%  { transform: translateX(-50%) translateY(3px)  scale(1.01)   rotate(-0.35deg); }
+  100% { transform: translateX(-50%) translateY(0)    scale(1)      rotate(0deg); }
+}
+
+@keyframes overlayGlow {
+  0%,100% { filter: hue-rotate(335deg) saturate(1.08) brightness(1.04) contrast(0.98) drop-shadow(0 2px 6px rgba(0,0,0,0.15)); }
+  50%     { filter: hue-rotate(338deg) saturate(1.2)  brightness(1.08) contrast(0.98) drop-shadow(0 3px 8px rgba(0,0,0,0.20)); }
+}
+
+@keyframes overlayFlicker {
+  0%, 100% { opacity: 0.95; }
+  45%      { opacity: 0.98; }
+  55%      { opacity: 0.92; }
+}
+
+/* Slide away overlay when poem mode */
+body.poem-mode .top-overlay {
+  animation: none !important;
+  transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .4s ease;
+  transform: translateX(-200%) !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Livelier cake color theme tuning */
+#cake {
+  /* globally lift vibrancy to match candles and overlay */
+  filter: hue-rotate(335deg) saturate(1.15) brightness(1.08) contrast(0.98);
+}
+/* Fine-tune key layers inside the cake SVG */
+#cake path[fill="#ffb3ba"] { fill: #ffc5d2; }   /* base pink layer brighter */
+#cake path[fill="#ff9aa2"] { fill: #ff9cb6; }   /* mid pink layer more vivid */
+#cake path[fill="#ffe0e6"],
+#cake rect[fill="#ffe0e6"] { fill: #fff0f5; }    /* cream/icing lighter */
+
+/* Welcome modal styles */
+@keyframes modalIn {
+  0% { transform: translateY(12px) scale(0.96); opacity: 0; filter: blur(2px); }
+  60% { transform: translateY(-4px) scale(1.02); opacity: 1; filter: blur(0); }
+  100% { transform: translateY(0) scale(1); }
+}
+@keyframes shimmer {
+  0% { transform: translateX(-120%) skewX(-12deg); }
+  100% { transform: translateX(220%) skewX(-12deg); }
+}
+#welcomeModal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(1200px 600px at 50% 10%, rgba(255,255,255,0.12), rgba(0,0,0,0.45));
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  z-index: 10000;
+}
+#welcomeModal.show { display: flex; }
+.modal-open { overflow: hidden; }
+
+#welcomeModal .modal-card {
+  position: relative;
+  width: min(92vw, 560px);
+  padding: 28px 22px 26px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,244,248,0.98), rgba(255,233,244,0.96));
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
+  border: 1px solid rgba(255,182,193,0.55);
+  animation: modalIn 700ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+.modal-title {
+  margin: 8px 0 8px;
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(24px, 4.8vw, 38px);
+  color: #a8456a;
+  text-shadow: 0 2px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(168,69,106,0.15);
+  text-align: center;
+}
+.modal-text {
+  margin: 0 6px 16px;
+  font-family: 'Baloo 2', cursive;
+  font-weight: 600;
+  color: #6b2d47;
+  text-align: center;
+  font-size: clamp(14px, 2.8vw, 18px);
+}
+.modal-btn {
+  display: inline-block;
+  margin: 6px auto 0;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffb7cf, #ff8fb3);
+  color: #5a1230;
+  font-weight: 700;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(255,145,180,0.4), inset 0 1px 0 rgba(255,255,255,0.7);
+  transition: transform .15s ease, filter .2s ease;
+}
+.modal-btn:hover { transform: translateY(-1px) scale(1.02); filter: brightness(1.05); }
+.modal-btn:active { transform: translateY(1px) scale(0.98); }
+
+.modal-badge {
+  position: absolute;
+  top: -18px; left: 50%; transform: translateX(-50%);
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: radial-gradient(circle at 30% 30%, #fff8fb, #ffd6e7);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.16);
+  border: 1px solid rgba(255,182,193,0.55);
+  font-size: 26px;
+}
+
+.modal-shimmer {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none; border-radius: 16px;
+}
+.modal-shimmer::before {
+  content: '';
+  position: absolute; top: 0; bottom: 0; width: 40%; opacity: .25;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.9), rgba(255,255,255,0));
+  animation: shimmer 2.2s ease-in-out infinite;
+}
+
+/* Poem card styles and swipe transition */
+.poem-card {
+  --poem-accent: #d44835; /* updated by JS via color picker */
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  width: min(88vw, 380px);
+  height: clamp(420px, 65svh, 580px);
+  max-height: 75svh;
+  border-radius: 16px;
+  background: repeating-linear-gradient(transparent 0 calc(1.2rem - 1px), #eecfd7 0 1.2rem);
+  background-color: #f2f2f2;
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.18) inset, 0 12px 24px rgba(0,0,0,0.20);
+  font-family: 'Caveat', cursive;
+  color: #5a2b3a;
+  overflow: visible;
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 60;
+}
+
+/* Medium mobile devices */
+@media (min-width: 481px) and (max-width: 768px) and (orientation: portrait) {
+  .poem-card {
+    width: min(86vw, 400px);
+    height: clamp(440px, 68svh, 600px);
+    max-height: 78svh;
+  }
+  .poem-card__content { 
+    font-size: clamp(18px, 4.8vw, 24px);
+    padding: 1.4rem 2.2rem 1.4rem 1.1rem;
+  }
+  /* Hearts close to card edges */
+  .poem-hearts { inset: -2% -3%; }
+  .poem-heart { width: 16px; height: 16px; }
+  .poem-heart.heart--top-left     { left: -1%;  top: -1%;  --scale: 2.4; --mx: -2px; --my: -2px; }
+  .poem-heart.heart--top-center   { left: 48%; top: -2%;  --scale: 2.2; --mx: 2px;  --my: -3px; }
+  .poem-heart.heart--top-right    { left: 98%; top: 1%;   --scale: 2.0; --mx: 3px;  --my: -2px; }
+  .poem-heart.heart--left-center  { left: -1%;  top: 46%; --scale: 2.6; --mx: -2px; --my: 2px; }
+  .poem-heart.heart--bottom-center{ left: 46%; top: 98%; --scale: 2.2; --mx: 2px;  --my: 3px; }
+  .poem-heart.heart--bottom-right { left: 98%; top: 84%; --scale: 2.4; --mx: 3px;  --my: 2px; }
+}
+
+/* Larger screens: portrait emphasis */
+@media (min-width: 769px) {
+  .poem-card { width: min(60vw, 620px); height: min(88vh, 900px); }
+}
+
+.poem-card__content {
+  align-self: start;
+  padding: 1.5rem 2.5rem 1.5rem 1.25rem;
+  font-size: clamp(18px, 4.8vw, 28px);
+  line-height: 1.4em;
+  position: relative;
+  z-index: 2;
+}
+.poem-card__content p { margin: 0 0 1.2rem 0; }
+
+/* Color picker (vertical tabs) */
+.poem-card__color-picker { position: absolute; top: 18px; right: 8px; border: 0; margin: 0; padding: 0; width: 40px; }
+.poem-card__color-picker legend { position: absolute; inset: 0; font-size: 0; }
+.poem-card__color-picker input { position: absolute; opacity: 0; pointer-events: none; }
+.poem-card__color-picker label {
+  position: relative; display: block; width: 40px; height: 30px; margin: 9px 0; cursor: pointer;
+  border-radius: 3px; background: var(--bg-color); font-size: 0;
+  box-shadow: -2px 1px 3px rgba(0,0,0,0.2);
+  transform-origin: left center; transform: scaleX(1); filter: brightness(90%);
+  transition: transform .2s cubic-bezier(1,1,.5,1.3333), filter .2s cubic-bezier(1,1,.5,1.3333);
+}
+.poem-card__color-picker label:hover { transform: scaleX(1.25); }
+.poem-card__color-picker label::after {
+  content: ""; position: absolute; top: 100%; right: 0; width: 0; height: 0;
+  border-top: 5px solid var(--bg-color); border-right: 5px solid transparent; border-bottom: 5px solid transparent;
+  filter: brightness(62%); transition: border-right .2s cubic-bezier(1,1,.5,1.3333), filter .2s;
+}
+.poem-card__color-picker label:hover::after { border-right: 12px solid transparent; }
+
+/* Checked state amplification */
+.poem-card__color-picker input:checked + label,
+.poem-card__color-picker input:focus + label {
+  transform: scaleX(1.25); filter: brightness(100%);
+}
+.poem-card__color-picker input:checked + label::after,
+.poem-card__color-picker input:focus + label::after { border-right: 12px solid transparent; filter: brightness(50%); }
+
+/* Specific palette swatches */
+.poem-card__color-picker label[for="poem-color-red"]    { --bg-color: #f3b2af; }
+.poem-card__color-picker label[for="poem-color-blue"]   { --bg-color: #b1f4fd; }
+.poem-card__color-picker label[for="poem-color-green"]  { --bg-color: #d5fec5; }
+.poem-card__color-picker label[for="poem-color-yellow"] { --bg-color: #feffbe; }
+.poem-card__color-picker label[for="poem-color-orange"] { --bg-color: #f9d7ac; }
+
+/* Hearts decoration around the card */
+.poem-hearts { position: absolute; inset: -5% -8%; pointer-events: none; z-index: 1; }
+.poem-heart { position: absolute; width: 22px; height: 22px; background: #a00; clip-path: path('M12 20a1 1 0 0 1-.437-.1C11.214 19.73 3 15.671 3 9a5 5 0 0 1 8.535-3.536l.465.465.465-.465A5 5 0 0 1 21 9c0 6.646-8.212 10.728-8.562 10.9A1 1 0 0 1 12 20z'); transform: scale(0) translate(0,0); opacity: 0; animation: heartPopFloat 9s .3s ease-in-out infinite; }
+.poem-heart::after { content: ""; position: absolute; inset: 0; transform: translate(0,0); background: var(--bg-color); transition: background .2s cubic-bezier(1,1,.5,1.3333); }
+.poem-heart.heart--with-dots::after { background-image: radial-gradient(#efefef 20%, transparent 25%); background-position: 0 0, 2px 2px; background-size: 4px 4px; }
+.poem-heart.heart--with-lines::after { background-image: repeating-linear-gradient(35deg, rgba(255,255,255,.25), rgba(255,255,255,.25) 2px, transparent 2px, transparent 4px); background-position: center; }
+.poem-heart.heart--is-yellow::after { --bg-color: #e7b843; }
+.poem-heart.heart--is-green::after  { --bg-color: #229587; }
+.poem-heart.heart--is-red::after    { --bg-color: #d44835; }
+.poem-heart.heart--is-pink::after   { --bg-color: #ce546d; }
+.poem-heart.heart--is-blue::after   { --bg-color: #58b7ce; }
+.poem-heart.heart--is-orange::after { --bg-color: #e8874e; }
+.poem-heart.heart--top-left { left: -8%; top: -6%; rotate: -7deg; z-index: 2; --scale: 4.6; --mx: -12px; --my: -10px; animation-delay: .1s; animation-duration: 8.5s; }
+.poem-heart.heart--top-center { left: 64%; top: -8%; rotate: -42deg; z-index: 0; --scale: 4.6; --mx: 10px; --my: -14px; animation-delay: .2s; animation-duration: 9.2s; }
+.poem-heart.heart--top-right { left: 110%; top: 4%; rotate: 10deg; z-index: 0; --scale: 3.6; --mx: 12px; --my: -8px; animation-delay: .3s; animation-duration: 8.8s; }
+.poem-heart.heart--left-center { left: -12%; top: 58%; rotate: -23deg; z-index: 2; --scale: 6.2; --mx: -10px; --my: 10px; animation-delay: .2s; animation-duration: 9.5s; }
+.poem-heart.heart--bottom-center { left: 38%; top: 104%; rotate: 40deg; --scale: 4.2; --mx: 6px; --my: 12px; animation-delay: .3s; animation-duration: 8.9s; }
+.poem-heart.heart--bottom-right { left: 102%; top: 82%; rotate: 12deg; z-index: 0; --scale: 5.4; --mx: 12px; --my: 8px; animation-delay: .4s; animation-duration: 9.6s; }
+
+/* Dynamic accent: tint hearts via body state if needed */
+body:has(#poem-color-red:checked)   .poem-heart::after   { --bg-color: #d44835; }
+body:has(#poem-color-blue:checked)  .poem-heart::after   { --bg-color: #58b7ce; }
+body:has(#poem-color-green:checked) .poem-heart::after   { --bg-color: #229587; }
+body:has(#poem-color-yellow:checked) .poem-heart::after   { --bg-color: #e7b843; }
+body:has(#poem-color-orange:checked) .poem-heart::after   { --bg-color: #e8874e; }
+
+@keyframes poem-pop {
+  0% { transform: scale(0); }
+  1%, 34%, 64%, 100% { transform: scale(var(--scale)) translate(0, 0); }
+  10%, 42%, 72% { transform: scale(var(--scale)) translate(-1px, -1px); }
+  18%, 50%, 80% { transform: scale(var(--scale)) translate(-1px, 2px); }
+  26%, 58%, 88% { transform: scale(var(--scale)) translate(1px, 1px); }
+}
+
+@keyframes heartPopFloat {
+  0% { transform: scale(0) translate(0,0); opacity: 0; }
+  10% { transform: scale(var(--scale)) translate(0,0); opacity: 1; }
+  60% { transform: scale(var(--scale)) translate(calc(var(--mx, 0px) * 0.6), calc(var(--my, 0px) * 0.6)); opacity: 1; }
+  100% { transform: scale(var(--scale)) translate(var(--mx, 0px), var(--my, 0px)); opacity: .85; }
+}
+
+/* Slide transitions between cake and poem */
+.greeting-card { overflow: hidden; }
+.cake-container { transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s ease; }
+.poem-card { transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s ease; }
+
+/* Default: cake visible, poem off-screen */
+.greeting-card:not(.is-poem-active) .cake-container { transform: translateX(0%); opacity: 1; }
+.greeting-card:not(.is-poem-active) .poem-card { transform: translateX(100%); opacity: 0; pointer-events: none; }
+
+/* Poem active: slide cake left and poem in */
+.greeting-card.is-poem-active .cake-container { transform: translateX(-100%); opacity: 0; }
+.greeting-card.is-poem-active .poem-card { transform: translateX(0%); opacity: 1; pointer-events: auto; }
+
+/* Ensure stacking above cake */
+.greeting-card.is-poem-active .poem-card { z-index: 60; }
+
+/* Improve readability with accent shadow */
+.poem-card { filter: drop-shadow(0 10px 18px rgba(0,0,0,.15)); }
+
+/* Adjust layout heights so card has room on small screens */
+@media (max-width: 768px) {
+  .cake-container { min-height: 54svh; }
+}
+
+/* Mobile phone optimizations */
+@media (max-width: 480px) and (orientation: portrait) {
+  /* Compact card for small phones */
+  .poem-card {
+    width: min(92vw, 320px);
+    height: clamp(380px, 60svh, 480px);
+    max-height: 70svh;
+    border-radius: 12px;
+  }
+  /* Better readable text size for mobile */
+  .poem-card__content { 
+    font-size: clamp(16px, 4.5vw, 20px);
+    padding: 1.2rem 2rem 1.2rem 1rem;
+    line-height: 1.35em;
+  }
+  /* Hearts very close to card edges - attached look */
+  .poem-hearts { inset: -1% -2%; }
+  .poem-heart { width: 14px; height: 14px; }
+  .poem-heart.heart--top-left     { left: -1%;  top: -1%;  --scale: 2.2; --mx: -2px; --my: -2px; }
+  .poem-heart.heart--top-center   { left: 48%; top: -2%;  --scale: 2.0; --mx: 2px;  --my: -3px; }
+  .poem-heart.heart--top-right    { left: 98%; top: 1%;   --scale: 1.8; --mx: 3px;  --my: -2px; }
+  .poem-heart.heart--left-center  { left: -1%;  top: 46%; --scale: 2.4; --mx: -2px; --my: 2px; }
+  .poem-heart.heart--bottom-center{ left: 46%; top: 98%; --scale: 2.0; --mx: 2px;  --my: 3px; }
+  .poem-heart.heart--bottom-right { left: 98%; top: 84%; --scale: 2.2; --mx: 3px;  --my: 2px; }
+}
+
+/* Desktop refinements for poem card sizing and hearts proximity */
+@media (min-width: 769px) {
+  /* Dynamic width/height similar to cake sizing */
+  .poem-card {
+    width: clamp(380px, 36vw, 560px);
+    height: clamp(520px, 68vh, 760px);
+    max-height: 78vh;
+  }
+  /* Larger, responsive poem text on desktop */
+  .poem-card__content { 
+    font-size: clamp(22px, 2.6vw, 32px);
+    padding: 1.8rem 2.8rem 1.8rem 1.4rem;
+  }
+  /* Bring hearts closer to card and reduce overflow on large screens */
+  .poem-hearts { inset: -4% -6%; }
+  .poem-heart.heart--top-right { left: 102%; }
+  .poem-heart.heart--top-left { left: -6%; }
+  .poem-heart.heart--left-center { left: -6%; }
+  .poem-heart.heart--bottom-center { top: 102%; }
 }
 
 /* End of stylesheet */
