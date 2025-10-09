@@ -12,8 +12,13 @@
 </head>
 <body>
 
+<div class="offline-banner" role="status" aria-live="polite">
+  <span class="offline-banner__icon" aria-hidden="true">⚠️</span>
+  <span class="offline-banner__text">You are offline. Online-only features are paused.</span>
+</div>
+
 <!-- Global floating overlay mask (not part of any container) -->
-<img id="topMask" class="top-overlay" src="https://i.imgur.com/4EKyDJM.png" alt="Top overlay mask" />
+<img id="topMask" class="top-overlay" src="assets/Images/top-overlay.webp" alt="Top overlay mask" />
 
 <main class="hero">
 <div class="hero-inner">
@@ -21,7 +26,7 @@
 <div class="cake-container">
   <div class="velas candle-1" aria-label="Birthday candle 1">
     <span class="wick" aria-hidden="true"></span>
-    <img class="candle-img" src="https://i.imgur.com/pL8Iajt.png" alt="Candle 1" />
+    <img class="candle-img" src="assets/Images/candle-img-1.webp" alt="Candle 1" />
     <div class="fuego"></div>
     <div class="fuego"></div>
     <div class="fuego"></div>
@@ -30,7 +35,7 @@
   </div>
   <div class="velas candle-9" aria-label="Birthday candle 9">
     <span class="wick" aria-hidden="true"></span>
-    <img class="candle-img" src="https://i.imgur.com/1Dsxxw1.png" alt="Candle 9" />
+    <img class="candle-img" src="assets/Images/candle-img-9.webp" alt="Candle 9" />
     <div class="fuego"></div>
     <div class="fuego"></div>
     <div class="fuego"></div>
@@ -187,25 +192,25 @@
     
     <!-- Strawberry decorations using custom images -->
     <!-- Strawberries Design 1 -->
-    <image href="https://i.imgur.com/ITdSOgi.png" x="50" y="430" width="14" height="14" class="strawberry-decoration" />
-    <image href="https://i.imgur.com/ITdSOgi.png" x="160" y="435" width="12" height="12" class="strawberry-decoration" />
-    <image href="https://i.imgur.com/ITdSOgi.png" x="85" y="445" width="13" height="13" class="strawberry-decoration" />
+    <image href="assets/Images/str.webp" x="50" y="430" width="14" height="14" class="strawberry-decoration" />
+    <image href="assets/Images/str.webp" x="160" y="435" width="12" height="12" class="strawberry-decoration" />
+    <image href="assets/Images/str.webp" x="85" y="445" width="13" height="13" class="strawberry-decoration" />
     
     <!-- Strawberries Design 2 -->
-    <image href="https://i.imgur.com/IT0G0GL.png" x="30" y="435" width="13" height="13" class="strawberry-decoration" />
-    <image href="https://i.imgur.com/IT0G0GL.png" x="140" y="440" width="11" height="11" class="strawberry-decoration" />
-    <image href="https://i.imgur.com/IT0G0GL.png" x="100" y="432" width="12" height="12" class="strawberry-decoration" />
+    <image href="assets/Images/str2.webp" x="30" y="435" width="13" height="13" class="strawberry-decoration" />
+    <image href="assets/Images/str2.webp" x="140" y="440" width="11" height="11" class="strawberry-decoration" />
+    <image href="assets/Images/str2.webp" x="100" y="432" width="12" height="12" class="strawberry-decoration" />
     
     <!-- Strawberry leaves -->
-    <image href="https://i.imgur.com/qqIVzzb.png" x="45" y="425" width="12" height="12" class="leaf-decoration" />
-    <image href="https://i.imgur.com/qqIVzzb.png" x="165" y="430" width="10" height="10" class="leaf-decoration" />
-    <image href="https://i.imgur.com/qqIVzzb.png" x="80" y="440" width="11" height="11" class="leaf-decoration" />
-    <image href="https://i.imgur.com/qqIVzzb.png" x="135" y="435" width="9" height="9" class="leaf-decoration" />
+    <image href="assets/Images/str-leaf.webp" x="45" y="425" width="12" height="12" class="leaf-decoration" />
+    <image href="assets/Images/str-leaf.webp" x="165" y="430" width="10" height="10" class="leaf-decoration" />
+    <image href="assets/Images/str-leaf.webp" x="80" y="440" width="11" height="11" class="leaf-decoration" />
+    <image href="assets/Images/str-leaf.webp" x="135" y="435" width="9" height="9" class="leaf-decoration" />
     
     <!-- Flower decorations -->
-    <image href="https://i.imgur.com/OQ1sg9E.png" x="20" y="445" width="14" height="14" class="flower-decoration" />
-    <image href="https://i.imgur.com/OQ1sg9E.png" x="170" y="440" width="12" height="12" class="flower-decoration" />
-    <image href="https://i.imgur.com/OQ1sg9E.png" x="90" y="430" width="13" height="13" class="flower-decoration" />
+    <image href="assets/Images/str-flower.webp" x="20" y="445" width="14" height="14" class="flower-decoration" />
+    <image href="assets/Images/str-flower.webp" x="170" y="440" width="12" height="12" class="flower-decoration" />
+    <image href="assets/Images/str-flower.webp" x="90" y="430" width="13" height="13" class="flower-decoration" />
     
     <!-- Colorful sprinkles with strawberry theme colors -->
     <rect x="50" y="435" width="3" height="1" rx="0.5" fill="#ffb3ba" transform="rotate(15 50 435)" />
@@ -234,7 +239,7 @@
 <!-- Happy Birthday Hana animation section (self-contained) -->
 <section id="hb-animation" class="hb-section">
   <div class="hb-container">
-    <svg class="hbMainSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="600" viewBox="0 0 600 600" style="width:100%; height:100%; visibility:hidden; overflow:hidden">
+    <svg class="hbMainSVG is-hidden" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="600" viewBox="0 0 600 600">
       <ellipse id="hbDot" rx="0" ry="4" cx="300" cy="580" fill="#F3F1E2"/>
       <circle id="hbSplashDot" r="0" cx="300" cy="300" fill="#F3F1E2"/>
       <circle opacity="0" id="hbSplashRing" r="6" cx="300" cy="300" fill="none" stroke="#F3F1E2" stroke-width="12"/>
@@ -264,9 +269,9 @@
 
       <g id="hbMerryGroup" fill="#F3F1E2" mask="url(#merryMask)">
         <text id="hbTitle" x="50%" y="280" text-anchor="middle" font-size="30" font-family="Baloo 2, Fredoka, Comfortaa, cursive" letter-spacing="1">
-          <tspan class="hb-word" x="50%" dy="0" style="font-weight:700;">Happy</tspan>
-          <tspan class="hb-word" x="50%" dy="36" style="font-weight:700;">Birthday</tspan>
-          <tspan class="hb-name" x="50%" dy="44" style="font-family:Pacifico, cursive; font-weight:400;">Hana!</tspan>
+          <tspan class="hb-word" x="50%" dy="0">Happy</tspan>
+          <tspan class="hb-word" x="50%" dy="36">Birthday</tspan>
+          <tspan class="hb-name" x="50%" dy="44">Hana!</tspan>
         </text>
       </g>
 
